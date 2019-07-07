@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EntityMapper
   class ZeitwerkInfelctor < Zeitwerk::GemInflector
     def camelize(basename, abspath)

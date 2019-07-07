@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EntityMapper
   class Transaction
     def self.call(mapping, &block)

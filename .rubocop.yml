@@ -1,0 +1,13 @@
+inherit_from: .rubocop_todo.yml
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/MultilineTernaryOperator:
+  Enabled: false
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: variable

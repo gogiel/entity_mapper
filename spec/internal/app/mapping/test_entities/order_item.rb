@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TestEntities
   class OrderItem
     attr_accessor :name, :quantity, :price

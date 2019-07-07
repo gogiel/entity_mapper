@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # TMP in propgress
 
 module EntityMapper
@@ -22,12 +24,12 @@ module EntityMapper
       private
 
       def update(mapping, snapshot_diff, ar_object)
-        if snapshot_diff.removed? # TODO - check if is virtual
+        if snapshot_diff.removed? # TODO: - check if is virtual
           ar_object.destroy
         else
           map_properties(mapping.properties, snapshot_diff.object, ar_object)
           map_relations(mapping.relations, snapshot_diff, ar_object)
-          ar_object.tap &:save!
+          ar_object.tap(&:save!)
         end
       end
 
@@ -43,10 +45,10 @@ module EntityMapper
 
           if relation.virtual?
             if relation_snapshot.new?
-              # TODO support STI/polymporphism
+              # TODO: support STI/polymporphism
               update(relation.mapping, relation_snapshot, parent_ar_object)
             elsif relation_snapshot.removed?
-              # TODO ??
+              # TODO: ??
             else
               update(relation.mapping, relation_snapshot, parent_ar_object)
             end
@@ -54,7 +56,7 @@ module EntityMapper
             if relation.collection?
               relation_snapshot.each do |relation_item_diff_snapshot|
                 if relation_item_diff_snapshot.new?
-                  # TODO support STI/polymporphism
+                  # TODO: support STI/polymporphism
                   ar_object = build(relation, parent_ar_object, relation_item_diff_snapshot)
                   update(relation.mapping, relation_item_diff_snapshot, ar_object)
                 else
@@ -64,7 +66,7 @@ module EntityMapper
               end
             else
               if relation_snapshot.new?
-                # TODO support STI/polymporphism
+                # TODO: support STI/polymporphism
                 ar_object = build(relation, parent_ar_object, relation_item_diff_snapshot)
                 update(relation.mapping, relation_snapshot, ar_object)
               else

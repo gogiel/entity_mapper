@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EntityMapper
   module Snapshot
     class TakeSnapshot
@@ -19,11 +21,11 @@ module EntityMapper
         relations.each_with_object({}) do |relation, hash|
           relation_value = relation.read_from(object)
 
-          if relation_value
-            hash[relation] = relation.collection? ?
-              relation_value.map { |relation_object| call(relation_object, relation.mapping) } :
-              call(relation_value, relation.mapping)
-          end
+          next unless relation_value
+
+          hash[relation] = relation.collection? ?
+            relation_value.map { |relation_object| call(relation_object, relation.mapping) } :
+            call(relation_value, relation.mapping)
         end
       end
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TestEntities
   class Price
     attr_reader :value, :currency

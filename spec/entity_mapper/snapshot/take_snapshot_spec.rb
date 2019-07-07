@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe EntityMapper::Snapshot::TakeSnapshot do
   let(:order) do
     TestEntities::Order.new.tap do |order|
@@ -8,10 +10,10 @@ RSpec.describe EntityMapper::Snapshot::TakeSnapshot do
 
   let(:map) { TestMapping }
 
-  subject(:snapshot) { described_class.new.call(order, map)}
+  subject(:snapshot) { described_class.new.call(order, map) }
 
   it "creates valid snapshot" do
     snapshot
-    # TODO - validate
+    # TODO: - validate
   end
 end

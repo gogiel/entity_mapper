@@ -1,5 +1,6 @@
-RSpec.describe EntityMapper::ActiveRecord::Update do
+# frozen_string_literal: true
 
+RSpec.describe EntityMapper::ActiveRecord::Update do
   let(:map) { TestMapping }
   let(:read_result) { EntityMapper::ActiveRecord::Read.call(map, order) }
   let(:mapped_entity) { read_result[0] }
@@ -73,7 +74,7 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
           "name" => "Milk",
           "price_value" => 3,
           "price_currency" => "PLN",
-          "quantity" => 1,
+          "quantity" => 1
         )
       end
     end

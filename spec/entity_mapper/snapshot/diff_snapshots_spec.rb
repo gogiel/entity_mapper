@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe EntityMapper::SnapshotDiff::Calculate do
   let(:item) do
     price = TestEntities::Price.new(5, TestEntities::Currency.new("USD"))

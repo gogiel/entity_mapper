@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EntityMapper
   module SnapshotDiff
     ObjectDiffSnapshot = Struct.new(:object, :properties_map, :relations_map, :state) do

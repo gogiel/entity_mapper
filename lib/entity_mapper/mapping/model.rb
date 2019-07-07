@@ -1,4 +1,6 @@
-require 'set'
+# frozen_string_literal: true
+
+require "set"
 
 module EntityMapper
   module Mapping

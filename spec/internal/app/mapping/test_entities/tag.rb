@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TestEntities
   class Tag
     attr_reader :name

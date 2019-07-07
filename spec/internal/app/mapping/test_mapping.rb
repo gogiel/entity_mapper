@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "test_entities/currency"
 require_relative "test_entities/order"
 require_relative "test_entities/order_item"
@@ -25,7 +27,7 @@ TestMapping = EntityMapper.map do |m|
     end
   end
 
-  find_or_initialize_tag_strategy = lambda do |relation, parent_ar_object, relation_item_diff_snapshot|
+  find_or_initialize_tag_strategy = lambda do |_relation, parent_ar_object, relation_item_diff_snapshot|
     tag_name = relation_item_diff_snapshot.object.name
     Tag.find_or_initialize_by(name: tag_name).tap do |tag|
       parent_ar_object.order_tags.new(tag: tag)

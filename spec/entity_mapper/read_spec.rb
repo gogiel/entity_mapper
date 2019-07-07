@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe "basic mapping reading" do
   let(:map) { TestMapping }
 
@@ -15,14 +17,14 @@ RSpec.describe "basic mapping reading" do
   let(:mapped_entity) { result[0] }
 
   it "reads root object" do
-    expect(mapped_entity.name).to eq 'test-name'
+    expect(mapped_entity.name).to eq "test-name"
     expect(mapped_entity).to be_paid
   end
 
   it "reads has_many relation" do
     expect(mapped_entity.items.count).to eq 1
     item = mapped_entity.items.first
-    expect(item.name).to eq 'order-item'
+    expect(item.name).to eq "order-item"
     expect(item.quantity).to eq 3
     expect(item.price.value).to eq 3
     expect(item.price.currency).to eq TestEntities::Currency.new("USD")

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "zeitwerk"
 require_relative "entity_mapper/zeitwerk_inflector"
 

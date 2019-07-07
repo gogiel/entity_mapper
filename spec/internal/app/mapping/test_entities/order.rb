@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TestEntities
   class Order
     attr_accessor :name, :tags

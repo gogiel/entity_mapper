@@ -7,6 +7,14 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
     EntityMapper::Transaction.call(&block)
   end
 
+  it "passes options to the context" do
+    context = double :context_class, new: EntityMapper::ActiveRecord::Context.new
+
+    EntityMapper::Transaction.call(context_class: context, a: 1, b: 2) {}
+
+    expect(context).to have_received(:new).with(a: 1, b: 2)
+  end
+
   context "existing order" do
     let(:order_item) do
       ::OrderItem.new(name: "order-item", quantity: 3, price_value: 3, price_currency: "USD")

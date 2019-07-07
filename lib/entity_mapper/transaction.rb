@@ -2,8 +2,8 @@
 
 module EntityMapper
   class Transaction
-    def self.call(context_class: ActiveRecord::Context)
-      context_class.new.call do |context|
+    def self.call(context_class: ActiveRecord::Context, **options)
+      context_class.new(options).call do |context|
         yield ContextDSL.new(context)
       end
     end

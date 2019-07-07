@@ -3,12 +3,13 @@
 module EntityMapper
   module ActiveRecord
     class Context
-      def initialize
+      def initialize(transaction_class: ::ActiveRecord::Base)
         @tracked_aggregates = []
+        @transaction_class = transaction_class
       end
 
       def call
-        ::ActiveRecord::Base.transaction do
+        @transaction_class.transaction do
           yield self
           save_changes
         end

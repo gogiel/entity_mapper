@@ -3,12 +3,12 @@
 module EntityMapper
   module Mapping
     class Relation < Property
-      attr_reader :mapping, :peristence_name, :build_strategy
+      attr_reader :mapping, :peristence_name, :options
 
       def initialize(name, peristence_name, mapping, options)
         super(name, peristence_name, options)
         @mapping = mapping
-        @build_strategy = options.fetch(:build_strategy, ActiveRecord::DefaultBuildStrategy)
+        @options = options
       end
 
       def virtual?

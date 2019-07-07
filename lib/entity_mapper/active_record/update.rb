@@ -79,7 +79,8 @@ module EntityMapper
       end
 
       def build(relation, parent_ar_object, relation_item_diff_snapshot)
-        relation.build_strategy.call(relation, parent_ar_object, relation_item_diff_snapshot)
+        relation.options.fetch(:build_strategy, ActiveRecord::DefaultBuildStrategy).
+          call(relation, parent_ar_object, relation_item_diff_snapshot)
       end
     end
   end

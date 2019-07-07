@@ -6,8 +6,8 @@ module EntityMapper
       new.call(mapping, &block)
     end
 
-    def call(mapping)
-      ActiveRecord::Context.new(mapping).call do |context|
+    def call(mapping, context_class: ActiveRecord::Context)
+      context_class.new(mapping).call do |context|
         yield ContextDSL.new(context)
       end
     end

@@ -4,7 +4,7 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
   let(:map) { TestMapping }
 
   def transaction(&block)
-    EntityMapper::Transaction.call(map, &block)
+    EntityMapper::Transaction.call(&block)
   end
 
   context "existing order" do
@@ -21,7 +21,7 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
     context "order property changed" do
       subject do
         transaction do |context|
-          mapped_entity = context.read(order)
+          mapped_entity = context.read(TestMapping, order)
           mapped_entity.refund!
         end
       end
@@ -35,7 +35,7 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
     context "order item property changed" do
       subject do
         transaction do |context|
-          mapped_entity = context.read(order)
+          mapped_entity = context.read(TestMapping, order)
           mapped_entity.items.first.quantity = 5
         end
       end
@@ -49,7 +49,7 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
     context "order item removed" do
       subject do
         transaction do |context|
-          mapped_entity = context.read(order)
+          mapped_entity = context.read(TestMapping, order)
           mapped_entity.clear!
         end
       end
@@ -63,7 +63,7 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
     context "order item added" do
       subject do
         transaction do |context|
-          mapped_entity = context.read(order)
+          mapped_entity = context.read(TestMapping, order)
           mapped_entity.add_item TestEntities::OrderItem.new("Milk", 1, TestEntities::Price.new(3, TestEntities::Currency.new("PLN")))
         end
       end
@@ -85,7 +85,7 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
 
     it "creates tags using custom builder" do
       transaction do |context|
-        mapped_entity = context.read(order)
+        mapped_entity = context.read(TestMapping, order)
         mapped_entity.tags.push(TestEntities::Tag.new("tag1"))
       end
 
@@ -100,7 +100,7 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
 
       before do
         transaction do |context|
-          mapped_entity = context.read(order)
+          mapped_entity = context.read(TestMapping, order)
           mapped_entity.name = "Test name"
         end
       end
@@ -113,7 +113,7 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
       context "with nested items" do
         before do
           transaction do |context|
-            mapped_entity = context.read(order)
+            mapped_entity = context.read(TestMapping, order)
             mapped_entity.add_item TestEntities::OrderItem.new("Milk", 1, TestEntities::Price.new(3, TestEntities::Currency.new("PLN")))
           end
         end
@@ -136,7 +136,7 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
       let(:create_order) do
         transaction do |context|
           order_entity = TestEntities::Order.new "Test name"
-          context.create(order_entity, Order)
+          context.create(TestMapping, order_entity, Order)
         end
       end
 

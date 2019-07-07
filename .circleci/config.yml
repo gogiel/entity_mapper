@@ -1,0 +1,33 @@
+version: 2
+jobs:
+  tests:
+    docker:
+      - image: circleci/ruby:2.6.3
+    steps:
+      - checkout
+      - restore_cache:
+          key: bundle-{{ checksum "Gemfile" }}
+      - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+      # Store bundle cache
+      - save_cache:
+          key: bundle-{{ checksum "Gemfile" }}
+          paths:
+            - vendor/bundle
+      - run: bundle exec rake spec
+
+  rubocop:
+    docker:
+      - image: circleci/ruby:2.6.3
+    steps:
+      - checkout
+      - restore_cache:
+          key: bundle-{{ checksum "Gemfile" }}
+      - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+      - run: bundle exec rake rubocop
+
+workflows:
+  version: 2
+  test_everything:
+    jobs:
+      - tests
+      - rubocop

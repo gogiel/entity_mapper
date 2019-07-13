@@ -11,3 +11,7 @@ Layout/DotPosition:
 
 Layout/EndAlignment:
   EnforcedStyleAlignWith: variable
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'

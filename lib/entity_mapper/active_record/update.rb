@@ -39,6 +39,8 @@ module EntityMapper
         end
       end
 
+      # TODO
+      # rubocop:disable Metrics/BlockLength
       def map_relations(relations, snapshot_diff, parent_ar_object)
         relations.each do |relation|
           relation_snapshot = snapshot_diff.relations_map[relation]
@@ -77,6 +79,7 @@ module EntityMapper
           end
         end
       end
+      # rubocop:enable Metrics/BlockLength
 
       def build(relation, parent_ar_object, relation_item_diff_snapshot)
         relation.options.fetch(:build_strategy, ActiveRecord::DefaultBuildStrategy).

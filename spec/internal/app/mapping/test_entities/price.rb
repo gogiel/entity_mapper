@@ -2,7 +2,8 @@
 
 module TestEntities
   class Price
-    attr_reader :value, :currency
+    attr_accessor :value
+    attr_reader :currency
 
     def initialize(value, currency)
       @value = value

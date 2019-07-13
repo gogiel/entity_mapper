@@ -7,7 +7,7 @@ module EntityMapper
 
       def initialize(name, peristence_name, options)
         @peristence_name = peristence_name
-        @name = name
+        @name = name.to_s
         @access = options.fetch(:access, :instance_variable)
       end
 

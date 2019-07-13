@@ -6,6 +6,7 @@ module TestEntities
 
     def initialize(name = "")
       @name = name
+      @paid = false
       @tags = []
       @items = []
     end

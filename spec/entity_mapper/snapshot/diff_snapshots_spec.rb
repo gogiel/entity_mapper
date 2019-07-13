@@ -69,7 +69,7 @@ RSpec.describe EntityMapper::SnapshotDiff::Calculate do
       end
 
       it "marks items changed in the relation" do
-        relation = map.relations.find { |r| r.name == "items" }
+        relation = map.relation_by_name "items"
         relation_items = diff.relations_map[relation]
 
         expect(relation_items[0]).to be_new

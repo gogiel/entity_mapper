@@ -39,51 +39,58 @@ module EntityMapper
         end
       end
 
-      # TODO
-      # rubocop:disable Metrics/BlockLength
       def map_relations(relations, snapshot_diff, parent_ar_object)
         relations.each do |relation|
           relation_snapshot = snapshot_diff.relations_map[relation]
 
           if relation.virtual?
-            if relation_snapshot.new?
-              # TODO: support STI/polymporphism
-              update(relation.mapping, relation_snapshot, parent_ar_object)
-            elsif relation_snapshot.removed?
-              # TODO: ??
-            else
-              update(relation.mapping, relation_snapshot, parent_ar_object)
-            end
+            update_virtual_relation(relation, relation_snapshot, parent_ar_object)
+          elsif relation.collection?
+            update_collection_relation(relation, relation_snapshot, parent_ar_object)
           else
-            if relation.collection?
-              relation_snapshot.each do |relation_item_diff_snapshot|
-                if relation_item_diff_snapshot.new?
-                  # TODO: support STI/polymporphism
-                  ar_object = build(relation, parent_ar_object, relation_item_diff_snapshot)
-                  update(relation.mapping, relation_item_diff_snapshot, ar_object)
-                else
-                  ar_object = @ar_map.ar_object(relation_item_diff_snapshot.object)
-                  update(relation.mapping, relation_item_diff_snapshot, ar_object)
-                end
-              end
-            else
-              if relation_snapshot.new?
-                # TODO: support STI/polymporphism
-                ar_object = build(relation, parent_ar_object, relation_item_diff_snapshot)
-                update(relation.mapping, relation_snapshot, ar_object)
-              else
-                ar_object = @ar_map.ar_object(relation_snapshot.object)
-                update(relation.mapping, relation_snapshot, ar_object)
-              end
-            end
+            update_single_relation(relation, relation_snapshot, parent_ar_object)
           end
         end
       end
-      # rubocop:enable Metrics/BlockLength
 
       def build(relation, parent_ar_object, relation_item_diff_snapshot)
         relation.options.fetch(:build_strategy, ActiveRecord::DefaultBuildStrategy).
           call(relation, parent_ar_object, relation_item_diff_snapshot)
+      end
+
+      def update_virtual_relation(relation, relation_snapshot, parent_ar_object)
+        if relation_snapshot.new?
+          # TODO: support STI/polymporphism
+          update(relation.mapping, relation_snapshot, parent_ar_object)
+        elsif relation_snapshot.removed?
+          # TODO: ??
+        else
+          update(relation.mapping, relation_snapshot, parent_ar_object)
+        end
+      end
+
+      def update_collection_relation(relation, relation_snapshot, parent_ar_object)
+        relation_snapshot.each do |relation_item_diff_snapshot|
+          if relation_item_diff_snapshot.new?
+            # TODO: support STI/polymporphism
+            ar_object = build(relation, parent_ar_object, relation_item_diff_snapshot)
+            update(relation.mapping, relation_item_diff_snapshot, ar_object)
+          else
+            ar_object = @ar_map.ar_object(relation_item_diff_snapshot.object)
+            update(relation.mapping, relation_item_diff_snapshot, ar_object)
+          end
+        end
+      end
+
+      def update_single_relation(relation, relation_snapshot, parent_ar_object)
+        if relation_snapshot.new?
+          # TODO: support STI/polymporphism
+          ar_object = build(relation, parent_ar_object, relation_snapshot)
+          update(relation.mapping, relation_snapshot, ar_object)
+        else
+          ar_object = @ar_map.ar_object(relation_snapshot.object)
+          update(relation.mapping, relation_snapshot, ar_object)
+        end
       end
     end
   end

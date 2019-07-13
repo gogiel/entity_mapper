@@ -25,7 +25,8 @@ module EntityMapper
 
       def update(mapping, snapshot_diff, ar_object)
         if snapshot_diff.removed? # TODO: - check if is virtual
-          ar_object.destroy
+          remove_strategy = RemoveStrategy.find(mapping.remove_strategy)
+          remove_strategy.call(ar_object)
         else
           map_properties(mapping.properties, snapshot_diff.object, ar_object)
           map_relations(mapping.relations, snapshot_diff, ar_object)

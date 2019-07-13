@@ -13,6 +13,10 @@ module EntityMapper
         mapping.model_class = klass
       end
 
+      def remove_strategy(strategy)
+        mapping.remove_strategy = strategy
+      end
+
       def property(name, peristence_name = nil, **options)
         mapping.add_property Property.new(name, peristence_name || name, options)
       end

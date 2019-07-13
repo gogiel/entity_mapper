@@ -6,11 +6,16 @@ module EntityMapper
   module Mapping
     class Model
       attr_accessor :model_class
-      attr_reader :properties, :relations
+      attr_reader :properties, :relations, :remove_strategy
 
-      def initialize(properties: Set.new, relations: Set.new)
-        @properties = properties
-        @relations = relations
+      def initialize
+        @properties = Set.new
+        @relations = Set.new
+        @remove_strategy = nil
+      end
+
+      def remove_strategy=(strategy)
+        @remove_strategy = strategy
       end
 
       def add_relation(relation)

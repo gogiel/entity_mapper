@@ -16,14 +16,20 @@ RSpec.describe EntityMapper::Transaction do
   end
 
   context "existing order" do
+    let(:comment) { OrderItemComment.new content: "No comments." }
+    let(:owner) { OrderItemOwner.new name: "John" }
+
     let(:order_item) do
-      ::OrderItem.new(name: "order-item", quantity: 3, price_value: 3, price_currency: "USD")
+      ::OrderItem.new(name: "order-item", quantity: 3, price_value: 3, price_currency: "USD").tap do |order_item|
+        order_item.comments = [comment]
+        order_item.owner = owner
+      end
     end
 
     let(:order) do
       ::Order.create!(name: "test-name", paid: true).tap do |order|
         order.order_items = [order_item]
-      end
+      end.tap(&:save!)
     end
 
     context "order property changed" do
@@ -65,6 +71,20 @@ RSpec.describe EntityMapper::Transaction do
       it "removes entity from DB" do
         subject
         expect { order_item.reload }.to raise_error ActiveRecord::RecordNotFound
+      end
+
+      describe "nested relation with default remove strategy" do
+        it "removes relation entities from DB" do
+          subject
+          expect { comment.reload }.to raise_error ActiveRecord::RecordNotFound
+        end
+      end
+
+      describe "nested relation with ignore remove strategy" do
+        it "doesn't remove relation entities from DB" do
+          subject
+          expect { owner.reload }.not_to raise_error ActiveRecord::RecordNotFound
+        end
       end
     end
 

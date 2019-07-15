@@ -8,6 +8,8 @@ module TestEntities
       @name = name
       @quantity = quantity
       @price = price
+      @comments = []
+      @owner = nil
     end
   end
 end

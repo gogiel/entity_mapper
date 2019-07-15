@@ -19,6 +19,16 @@ ActiveRecord::Schema.define do
     t.datetime "updated_at", null: false
   end
 
+  create_table "order_item_comments", force: :cascade do |t|
+    t.integer "order_item_id"
+    t.string "content"
+  end
+
+  create_table "order_item_owners", force: :cascade do |t|
+    t.integer "order_item_id"
+    t.string "name"
+  end
+
   create_table "order_tags", force: :cascade do |t|
     t.integer "order_id"
     t.integer "tag_id"

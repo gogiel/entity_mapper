@@ -5,6 +5,10 @@ module EntityMapper
     module RemoveStrategy
       class Ignore
         def call(_ar_object); end
+
+        def update_nested?
+          false
+        end
       end
     end
   end

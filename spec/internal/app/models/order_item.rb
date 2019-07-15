@@ -2,4 +2,6 @@
 
 class OrderItem < ApplicationRecord
   belongs_to :order
+  has_many :comments, class_name: "OrderItemComment"
+  has_one :owner, class_name: "OrderItemOwner"
 end

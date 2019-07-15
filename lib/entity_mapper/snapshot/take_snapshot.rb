@@ -21,8 +21,6 @@ module EntityMapper
         relations.each_with_object({}) do |relation, hash|
           relation_value = relation.read_from(object)
 
-          next unless relation_value
-
           hash[relation] = relation.collection? ?
             relation_value.map { |relation_object| call(relation_object, relation.mapping) } :
             call(relation_value, relation.mapping)

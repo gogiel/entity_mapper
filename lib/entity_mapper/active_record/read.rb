@@ -41,7 +41,7 @@ module EntityMapper
               end
             else
               ar_object = ar_model.send(relation.persistence_name)
-              read(relation.mapping, ar_object)
+              read(relation.mapping, ar_object) if ar_object
             end
           else
             read(relation.mapping, ar_model)

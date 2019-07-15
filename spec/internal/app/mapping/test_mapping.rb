@@ -17,6 +17,17 @@ TestMapping = EntityMapper.map do |m|
     item_model.property(:quantity)
     item_model.property(:name)
 
+    item_model.has_many("comments", persistence_name: "comments") do |item_comment|
+      item_comment.model TestEntities::OrderItemComment
+      item_comment.property(:content)
+    end
+
+    item_model.has_one("owner", persistence_name: "owner") do |owner|
+      owner.remove_strategy :ignore
+      owner.model TestEntities::Owner
+      owner.property :name
+    end
+
     item_model.has_one("price", persistence_name: nil) do |price_model|
       price_model.model TestEntities::Price
       price_model.property(:value, :price_value)

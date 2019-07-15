@@ -12,15 +12,15 @@ TestMapping = EntityMapper.map do |m|
   m.property(:name)
   m.property(:paid)
 
-  m.has_many("items", peristence_name: "order_items") do |item_model|
+  m.has_many("items", persistence_name: "order_items") do |item_model|
     item_model.model TestEntities::OrderItem
     item_model.property(:quantity)
     item_model.property(:name)
 
-    item_model.has_one("price", peristence_name: nil) do |price_model|
+    item_model.has_one("price", persistence_name: nil) do |price_model|
       price_model.model TestEntities::Price
       price_model.property(:value, :price_value)
-      price_model.has_one("currency", peristence_name: nil) do |currency_model|
+      price_model.has_one("currency", persistence_name: nil) do |currency_model|
         currency_model.model TestEntities::Currency
         currency_model.property(:name, :price_currency, access: :method)
       end
@@ -34,7 +34,7 @@ TestMapping = EntityMapper.map do |m|
     end
   end
 
-  m.has_many("tags", peristence_name: "tags", build_strategy: find_or_initialize_tag_strategy) do |tag_model|
+  m.has_many("tags", persistence_name: "tags", build_strategy: find_or_initialize_tag_strategy) do |tag_model|
     tag_model.model TestEntities::Tag
     tag_model.property(:name)
   end

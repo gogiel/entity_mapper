@@ -27,7 +27,7 @@ module EntityMapper
 
       def read_properties(properties, object, ar_model)
         properties.each do |property|
-          property.write_to(object, ar_model.send(property.peristence_name))
+          property.write_to(object, ar_model.send(property.persistence_name))
         end
       end
 
@@ -36,11 +36,11 @@ module EntityMapper
           result = if !relation.virtual?
 
             if relation.collection?
-              ar_model.send(relation.peristence_name).map do |ar_object|
+              ar_model.send(relation.persistence_name).map do |ar_object|
                 read(relation.mapping, ar_object)
               end
             else
-              ar_object = ar_model.send(relation.peristence_name)
+              ar_object = ar_model.send(relation.persistence_name)
               read(relation.mapping, ar_object)
             end
           else

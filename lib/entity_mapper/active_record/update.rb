@@ -36,7 +36,7 @@ module EntityMapper
 
       def map_properties(properties, object, ar_object)
         properties.each do |property|
-          ar_object.send("#{property.peristence_name}=", property.read_from(object))
+          ar_object.send("#{property.persistence_name}=", property.read_from(object))
         end
       end
 

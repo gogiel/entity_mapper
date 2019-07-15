@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 RSpec.describe EntityMapper::SnapshotDiff::Calculate do
-  let(:item) do
-    price = TestEntities::Price.new(5, TestEntities::Currency.new("USD"))
-    TestEntities::OrderItem.new("Test Item", 2, price)
-  end
-
   let(:order) do
     TestEntities::Order.new.tap do |order|
       order.add_item(item)
     end
   end
+
+  let(:item) { TestEntities::OrderItem.new("Test Item", 2, price) }
+
+  let(:price) { TestEntities::Price.new(5, currency) }
+  let(:currency) { TestEntities::Currency.new("USD") }
 
   let(:map) { TestMapping }
 
@@ -25,6 +25,16 @@ RSpec.describe EntityMapper::SnapshotDiff::Calculate do
 
     it "is marked as removed" do
       expect(diff).to be_removed
+    end
+
+    context "nested relation" do
+      let(:items_relation_definition) { map.relation_by_name "items" }
+
+      it "is marked as removed" do
+        items_relation_snapshot = diff.relations_map[items_relation_definition]
+        item_snapshot = items_relation_snapshot.first
+        expect(item_snapshot).to be_removed
+      end
     end
   end
 

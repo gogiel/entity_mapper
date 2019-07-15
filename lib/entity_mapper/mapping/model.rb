@@ -14,9 +14,7 @@ module EntityMapper
         @remove_strategy = nil
       end
 
-      def remove_strategy=(strategy)
-        @remove_strategy = strategy
-      end
+      attr_writer :remove_strategy
 
       def add_relation(relation)
         @relations << relation

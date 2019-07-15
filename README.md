@@ -106,15 +106,15 @@ Mapping = EntityMapper.map do |m|
   m.property(:name)
   m.property(:paid)
 
-  m.has_many("items", peristence_name: "order_items") do |item_model|
+  m.has_many("items", persistence_name: "order_items") do |item_model|
     item_model.model Entities::OrderItem
     item_model.property(:quantity)
     item_model.property(:name)
 
-    item_model.has_one("price", peristence_name: nil) do |price_model|
+    item_model.has_one("price", persistence_name: nil) do |price_model|
       price_model.model Entities::Price
       price_model.property(:value, :price_value)
-      price_model.has_one("currency", peristence_name: nil) do |currency_model|
+      price_model.has_one("currency", persistence_name: nil) do |currency_model|
         currency_model.model Entities::Currency
         currency_model.property(:name, :price_currency, access: :method)
       end

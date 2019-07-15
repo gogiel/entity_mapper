@@ -3,10 +3,10 @@
 module EntityMapper
   module Mapping
     class Property
-      attr_reader :peristence_name, :name
+      attr_reader :persistence_name, :name
 
-      def initialize(name, peristence_name, options)
-        @peristence_name = peristence_name
+      def initialize(name, persistence_name, options)
+        @persistence_name = persistence_name
         @name = name.to_s
         @access = options.fetch(:access, :instance_variable)
       end

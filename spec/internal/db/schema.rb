@@ -24,6 +24,11 @@ ActiveRecord::Schema.define do
     t.string "content"
   end
 
+  create_table "order_item_discounts", force: :cascade do |t|
+    t.integer "order_item_id"
+    t.integer "value"
+  end
+
   create_table "order_item_owners", force: :cascade do |t|
     t.integer "order_item_id"
     t.string "name"

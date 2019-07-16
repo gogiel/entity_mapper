@@ -25,7 +25,12 @@ TestMapping = EntityMapper.map do |m|
     item_model.has_one("owner", persistence_name: "owner") do |owner|
       owner.remove_strategy :ignore
       owner.model TestEntities::Owner
-      owner.property :name
+      owner.property :first_name, :name
+    end
+
+    item_model.has_one("discount", persistence_name: "discount") do |discount|
+      discount.model TestEntities::OrderItemDiscount
+      discount.property :value
     end
 
     item_model.has_one("price", persistence_name: nil) do |price_model|

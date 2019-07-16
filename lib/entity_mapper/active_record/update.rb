@@ -94,7 +94,7 @@ module EntityMapper
           update(relation.mapping, relation_snapshot, ar_object)
         else
           ar_object = @ar_map.ar_object(relation_snapshot.object)
-          update(relation.mapping, relation_snapshot, ar_object)
+          update(relation.mapping, relation_snapshot, ar_object) if ar_object
         end
       end
     end

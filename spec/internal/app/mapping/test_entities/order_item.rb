@@ -2,7 +2,7 @@
 
 module TestEntities
   class OrderItem
-    attr_accessor :name, :quantity, :price
+    attr_accessor :name, :quantity, :price, :owner, :discount
 
     def initialize(name, quantity, price)
       @name = name
@@ -10,6 +10,7 @@ module TestEntities
       @price = price
       @comments = []
       @owner = nil
+      @discount = nil
     end
   end
 end

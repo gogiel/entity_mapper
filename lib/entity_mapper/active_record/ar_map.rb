@@ -12,7 +12,7 @@ module EntityMapper
       end
 
       def ar_object(object)
-        @map.fetch(object)
+        @map[object]
       end
     end
   end

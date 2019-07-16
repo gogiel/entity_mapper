@@ -2,10 +2,10 @@
 
 module TestEntities
   class Owner
-    attr_accessor :name
+    attr_accessor :first_name
 
-    def initialize(name)
-      @name = name
+    def initialize(first_name)
+      @first_name = first_name
     end
   end
 end

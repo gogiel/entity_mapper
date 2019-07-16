@@ -11,9 +11,9 @@ RSpec.describe EntityMapper::SnapshotDiff::Calculate do
   let(:customer) { TestEntities::Customer.new("Robert") }
   let(:owner1) { TestEntities::Owner.new("John") }
   let(:owner2) { TestEntities::Owner.new("Mike") }
-  let(:comment1) { TestEntities::OrderItemComment.new("comment one")}
-  let(:comment2) { TestEntities::OrderItemComment.new("comment two")}
-  let(:item1) { TestEntities::OrderItem.new("Test Item", 2, price, owner: owner1, comments: [comment1] ) }
+  let(:comment1) { TestEntities::OrderItemComment.new("comment one") }
+  let(:comment2) { TestEntities::OrderItemComment.new("comment two") }
+  let(:item1) { TestEntities::OrderItem.new("Test Item", 2, price, owner: owner1, comments: [comment1]) }
   let(:item2) { TestEntities::OrderItem.new("Test Item 2", 5, price, owner: owner2, comments: [comment2]) }
 
   let(:price) { TestEntities::Price.new(5, currency) }
@@ -23,8 +23,8 @@ RSpec.describe EntityMapper::SnapshotDiff::Calculate do
 
   let(:map) { TestMapping }
   let(:items_relation_definition) { map.relation_by_name "items" }
-  let(:customer_relation_definition) { map.relation_by_name "customer"}
-  let(:item_comments_relation_definition) { items_relation_definition.mapping.relation_by_name "comments"}
+  let(:customer_relation_definition) { map.relation_by_name "customer" }
+  let(:item_comments_relation_definition) { items_relation_definition.mapping.relation_by_name "comments" }
   let(:item_owner_relation_definition) { items_relation_definition.mapping.relation_by_name "owner" }
 
   def take_snapshot

@@ -30,7 +30,7 @@ module EntityMapper
 
       def properties_changed?(previous_snapshot, current_snapshot)
         current_snapshot.properties_map.any? do |property, value|
-          ! value.equal? previous_snapshot.properties_map.fetch(property)
+          !value.equal? previous_snapshot.properties_map.fetch(property)
         end
       end
 

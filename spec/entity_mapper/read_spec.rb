@@ -5,8 +5,7 @@ RSpec.describe EntityMapper::ActiveRecord::Read do
 
   let(:order_item) do
     ::OrderItem.new(name: "order-item", quantity: 3,  price_value: 3, price_currency: "USD",
-      owner: ::OrderItemOwner.new(name: "John"),
-      )
+                    owner: ::OrderItemOwner.new(name: "John"))
   end
 
   let(:order) do

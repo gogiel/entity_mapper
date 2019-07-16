@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe EntityMapper::Transaction do
+RSpec.describe EntityMapper::ActiveRecord::Update do
   let(:map) { TestMapping }
 
   def transaction(&block)

@@ -2,6 +2,14 @@
 
 module EntityMapper
   module Snapshot
-    ObjectSnapshot = Struct.new(:object, :properties_map, :relations_map)
+    class ObjectSnapshot
+      def initialize(object:, properties_map:, relations_map:)
+        @object = object
+        @properties_map = properties_map
+        @relations_map = relations_map
+      end
+
+      attr_reader :object, :properties_map, :relations_map
+    end
   end
 end

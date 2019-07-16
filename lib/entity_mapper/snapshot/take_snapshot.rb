@@ -5,9 +5,9 @@ module EntityMapper
     class TakeSnapshot
       def call(object, mapping)
         ObjectSnapshot.new(
-          object,
-          properties_map(object, mapping.properties),
-          relations_map(object, mapping.relations)
+          object: object,
+          properties_map: properties_map(object, mapping.properties),
+          relations_map: relations_map(object, mapping.relations)
         )
       end
 

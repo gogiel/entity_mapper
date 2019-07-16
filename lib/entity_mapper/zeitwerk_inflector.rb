@@ -2,15 +2,8 @@
 
 module EntityMapper
   class ZeitwerkInfelctor < Zeitwerk::GemInflector
-    def camelize(basename, abspath)
-      case basename
-      when "dsl"
-        "DSL"
-      when /_dsl$/
-        super.gsub("Dsl", "DSL")
-      else
-        super
-      end
+    def camelize(_basename, _abspath)
+      super.sub(/Dsl\z/, "DSL")
     end
   end
 end

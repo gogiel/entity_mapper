@@ -9,10 +9,10 @@ module EntityMapper
         object = current_snapshot || previous_snapshot
 
         ObjectDiffSnapshot.new(
-          object.object,
-          object.properties_map,
-          relations_map(previous_snapshot, current_snapshot),
-          state
+          object: object.object,
+          properties_map: object.properties_map,
+          relations_map: relations_map(previous_snapshot, current_snapshot),
+          state: state
         )
       end
 

@@ -2,21 +2,30 @@
 
 module EntityMapper
   module SnapshotDiff
-    ObjectDiffSnapshot = Struct.new(:object, :properties_map, :relations_map, :state) do
+    class ObjectDiffSnapshot
+      def initialize(object:, properties_map:, relations_map:, state:)
+        @object = object
+        @properties_map = properties_map
+        @relations_map = relations_map
+        @state = state
+      end
+
+      attr_reader :object, :properties_map, :relations_map
+
       def new?
-        state == :new
+        @state.equal? :new
       end
 
       def changed?
-        state == :changed
+        @state.equal? :changed
       end
 
       def unchanged?
-        state == :unchanged
+        @state.equal? :unchanged
       end
 
       def removed?
-        state == :removed
+        @state.equal? :removed
       end
     end
   end

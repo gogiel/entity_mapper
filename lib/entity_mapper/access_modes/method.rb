@@ -8,11 +8,11 @@ module EntityMapper
       end
 
       def read_from(object)
-        object.send(@name)
+        object.public_send(@name)
       end
 
       def write_to(object, value)
-        object.send("#{@name}=", value)
+        object.public_send("#{@name}=", value)
       end
     end
   end

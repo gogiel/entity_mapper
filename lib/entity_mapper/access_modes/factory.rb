@@ -6,9 +6,9 @@ module EntityMapper
       def self.call(access_mode, name)
         case access_mode
         when :instance_variable
-          AccessModes::InstanceVariable.new(name)
+          InstanceVariable.new(name)
         when :method
-          AccessModes::Method.new(name)
+          Method.new(name)
         else
           raise "Access mode #{access_mode} not supported."
         end

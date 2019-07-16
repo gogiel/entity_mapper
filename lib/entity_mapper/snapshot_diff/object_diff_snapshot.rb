@@ -11,6 +11,10 @@ module EntityMapper
         state == :changed
       end
 
+      def unchanged?
+        state == :unchanged
+      end
+
       def removed?
         state == :removed
       end

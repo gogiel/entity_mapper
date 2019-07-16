@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 ActiveRecord::Schema.define do
+  create_table "customers", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "order_items", force: :cascade do |t|
     t.string "name"
     t.integer "price_value"
@@ -15,6 +21,7 @@ ActiveRecord::Schema.define do
   create_table "orders", force: :cascade do |t|
     t.string "name"
     t.boolean "paid"
+    t.integer "customer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

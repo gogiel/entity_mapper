@@ -3,10 +3,6 @@
 module EntityMapper
   module SnapshotDiff
     class Calculate
-      def self.call(previous_snapshot, current_snapshot)
-        call(previous_snapshot, current_snapshot)
-      end
-
       def call(previous_snapshot, current_snapshot)
         state = diff_state(previous_snapshot, current_snapshot)
 
@@ -34,7 +30,7 @@ module EntityMapper
 
       def properties_changed?(previous_snapshot, current_snapshot)
         current_snapshot.properties_map.any? do |property, value|
-          value != previous_snapshot.properties_map[property]
+          ! value.equal? previous_snapshot.properties_map.fetch(property)
         end
       end
 
@@ -59,7 +55,7 @@ module EntityMapper
           current_snapshot.
             relations_map.
             each_with_object({}) do |(relation, relation_value), hash|
-            previous_snapshot_relation = previous_snapshot.relations_map[relation]
+            previous_snapshot_relation = previous_snapshot.relations_map.fetch(relation)
             hash[relation] = if relation.collection?
               existing_items = relation_value.map { |value| call(find_previous_snapshot(previous_snapshot_relation, value), value) }
               removed_items = previous_snapshot_relation.reject { |value| find_previous_snapshot(relation_value, value) }.map { |value| call(value, nil) }
@@ -73,7 +69,7 @@ module EntityMapper
       end
 
       def find_previous_snapshot(previous_snapshot_relation, value)
-        previous_snapshot_relation.find { |v| v.object == value.object }
+        previous_snapshot_relation.find { |v| v.object.equal? value.object }
       end
     end
   end

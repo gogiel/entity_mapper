@@ -12,6 +12,12 @@ TestMapping = EntityMapper.map do |m|
   m.property(:name)
   m.property(:paid)
 
+  m.has_one("customer", persistence_name: "customer") do |owner|
+    owner.remove_strategy :ignore
+    owner.model TestEntities::Customer
+    owner.property :first_name, :name
+  end
+
   m.has_many("items", persistence_name: "order_items") do |item_model|
     item_model.model TestEntities::OrderItem
     item_model.property(:quantity)

@@ -12,7 +12,7 @@ module EntityMapper
       end
 
       def virtual?
-        persistence_name.nil?
+        false
       end
 
       def collection?

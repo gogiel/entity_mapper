@@ -39,10 +39,10 @@ TestMapping = EntityMapper.map do |m|
       discount.property :value
     end
 
-    item_model.has_one("price", persistence_name: nil) do |price_model|
+    item_model.has_one_virtual("price") do |price_model|
       price_model.model TestEntities::Price
       price_model.property(:value, :price_value)
-      price_model.has_one("currency", persistence_name: nil) do |currency_model|
+      price_model.has_one_virtual("currency") do |currency_model|
         currency_model.model TestEntities::Currency
         currency_model.property(:name, :price_currency, access: :method)
       end

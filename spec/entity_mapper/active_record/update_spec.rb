@@ -83,7 +83,7 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
       describe "nested relation with ignore remove strategy" do
         it "doesn't remove relation entities from DB" do
           subject
-          expect { owner.reload }.not_to raise_error ActiveRecord::RecordNotFound
+          expect { owner.reload }.not_to raise_error
         end
       end
     end

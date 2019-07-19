@@ -6,6 +6,7 @@ require_relative "entity_mapper/zeitwerk_inflector"
 loader = Zeitwerk::Loader.for_gem
 loader.inflector = EntityMapper::ZeitwerkInfelctor.new(__FILE__)
 loader.setup
+loader.eager_load_exclusions.add File.join(__dir__, "entity_mapper/zeitwerk_inflector.rb")
 
 module EntityMapper
   def self.map

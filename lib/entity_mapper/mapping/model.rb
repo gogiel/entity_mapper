@@ -11,25 +11,24 @@ module EntityMapper
       def initialize
         @properties = Set.new
         @relations = Set.new
-        @remove_strategy = nil
       end
 
       attr_writer :remove_strategy
 
       def add_relation(relation)
-        @relations << relation
+        relations << relation
       end
 
       def add_property(property)
-        @properties << property
+        properties << property
       end
 
       def relation_by_name(name)
-        @relations.find { |r| r.name == name.to_s }
+        relations.find { |r| r.name.to_s.eql? name.to_s }
       end
 
       def property_by_name(name)
-        @properties.find { |p| p.name == name.to_s }
+        properties.find { |p| p.name.to_s.eql? name.to_s }
       end
     end
   end

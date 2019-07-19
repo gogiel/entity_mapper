@@ -4,8 +4,7 @@ module EntityMapper
   module Mapping
     class HasOneVirtualRelation < HasOneRelation
       def initialize(name, mapping, options)
-        persistence_name = nil
-        super name, persistence_name, mapping, options
+        super name, nil, mapping, options
       end
 
       def virtual?

@@ -23,21 +23,21 @@ module EntityMapper
 
       # rubocop:disable Naming/PredicateName
       def has_one(relation_name, persistence_name:, **options)
-        inner_mapping = Mapping::Model.new.tap do |mapping|
+        inner_mapping = Model.new.tap do |mapping|
           yield DSL.new(mapping)
         end
         mapping.add_relation HasOneRelation.new(relation_name, persistence_name, inner_mapping, options)
       end
 
       def has_one_virtual(relation_name, **options)
-        inner_mapping = Mapping::Model.new.tap do |mapping|
+        inner_mapping = Model.new.tap do |mapping|
           yield DSL.new(mapping)
         end
         mapping.add_relation HasOneVirtualRelation.new(relation_name, inner_mapping, options)
       end
 
       def has_many(relation_name, persistence_name:, **options)
-        inner_mapping = Mapping::Model.new.tap do |mapping|
+        inner_mapping = Model.new.tap do |mapping|
           yield DSL.new(mapping)
         end
         mapping.add_relation HasManyRelation.new(relation_name, persistence_name, inner_mapping, options)

@@ -3,12 +3,13 @@
 module EntityMapper
   module Mapping
     class Property
-      attr_reader :persistence_name, :name
+      attr_reader :persistence_name, :name, :options
 
       def initialize(name, persistence_name, options)
         @persistence_name = persistence_name
-        @name = name.to_s
+        @name = name
         @access = options.fetch(:access, :instance_variable)
+        @options = options
       end
 
       def read_from(object)
@@ -22,7 +23,7 @@ module EntityMapper
       private
 
       def accessor
-        @accessor ||= AccessModes::Factory.call(@access, @name)
+        @accessor ||= AccessModes::Factory.call(@access, name)
       end
     end
   end

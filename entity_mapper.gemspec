@@ -32,4 +32,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec-rails"
   spec.add_development_dependency "rubocop", "~> 0.72.0"
   spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "sorbet", "0.4.4485"
 end

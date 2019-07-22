@@ -1,6 +1,7 @@
+# typed: false
 # frozen_string_literal: true
 
-RSpec.describe EntityMapper::ZeitwerkInfelctor do
+RSpec.describe EntityMapper::ZeitwerkInflector do
   describe "#camelize" do
     subject { described_class.new "absolute " }
 

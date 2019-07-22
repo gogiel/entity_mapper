@@ -1,3 +1,8 @@
+#test:
+#  adapter:  sqlite3
+#  database: db/combustion_test.sqlite
 test:
-  adapter:  sqlite3
-  database: db/combustion_test.sqlite
+  adapter: postgresql
+  database: entity_mapper_test
+  host: localhost
+  user: root

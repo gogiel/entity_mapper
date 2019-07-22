@@ -12,6 +12,14 @@ RSpec.describe EntityMapper::ZeitwerkInfelctor do
       expect(subject.camelize("project_dsl", "absolute")).to eq "ProjectDSL"
     end
 
+    it "doesnt change dsl in the prefix" do
+      expect(subject.camelize("dsl_test", "absolute")).to eq "DslTest"
+    end
+
+    it "doesn't change dsl if part of string" do
+      expect(subject.camelize("project_dsla", "absolute")).to eq "ProjectDsla"
+    end
+
     it "returns camelized string by default" do
       expect(subject.camelize("test_name", "absolute")).to eq "TestName"
     end

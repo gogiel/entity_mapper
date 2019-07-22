@@ -21,9 +21,11 @@ module EntityMapper
         relations.each_with_object({}) do |relation, hash|
           relation_value = relation.read_from(object)
 
-          hash[relation] = relation.collection? ?
-            relation_value.map { |relation_object| call(relation_object, relation.mapping) } :
+          hash[relation] = if relation.collection?
+            relation_value.map { |relation_object| call(relation_object, relation.mapping) }
+          else
             call(relation_value, relation.mapping)
+          end
         end
       end
     end

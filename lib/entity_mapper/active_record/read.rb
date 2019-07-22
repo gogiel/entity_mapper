@@ -34,20 +34,23 @@ module EntityMapper
       def read_relations(relations, object, ar_model)
         relations.each do |relation|
           result = if !relation.virtual?
-
-            if relation.collection?
-              ar_model.public_send(relation.persistence_name).map do |ar_object|
-                read(relation.mapping, ar_object)
-              end
-            else
-              ar_object = ar_model.public_send(relation.persistence_name)
-              read(relation.mapping, ar_object) if ar_object
-            end
+            read_ar_relations(ar_model, relation)
           else
             read(relation.mapping, ar_model)
           end
 
           relation.write_to(object, result)
+        end
+      end
+
+      def read_ar_relations(ar_model, relation)
+        if relation.collection?
+          ar_model.public_send(relation.persistence_name).map do |ar_object|
+            read(relation.mapping, ar_object)
+          end
+        else
+          ar_object = ar_model.public_send(relation.persistence_name)
+          read(relation.mapping, ar_object) if ar_object
         end
       end
     end

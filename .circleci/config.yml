@@ -26,9 +26,25 @@ jobs:
       - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
       - run: bundle exec rake rubocop
 
+  mutant:
+    docker:
+      - image: circleci/ruby:2.6.3
+      - image: circleci/postgres:9.6.5-alpine-ram
+    steps:
+      - checkout
+      - restore_cache:
+          key: bundle-{{ checksum "Gemfile" }}
+      - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+      - run: bundle exec mutant -r entity_mapper -r ./spec/spec_helper -I lib  --use rspec --since origin/master -- 'EntityMapper*'
+
 workflows:
   version: 2
   test_everything:
     jobs:
       - tests
       - rubocop
+      - mutant:
+          filters:
+            branches:
+              ignore:
+                - master

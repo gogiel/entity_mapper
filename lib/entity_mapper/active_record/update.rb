@@ -18,7 +18,7 @@ module EntityMapper
         map_relations(mapping.relations, snapshot_diff, ar_object)
 
         if snapshot_diff.removed?
-          RemoveStrategy.find(mapping.remove_strategy).call(ar_object)
+          RemoveStrategy::Factory.find(mapping.remove_strategy).call(ar_object)
         else
           ar_object.tap(&:save!)
         end
@@ -63,7 +63,7 @@ module EntityMapper
         ar_object = if relation_snapshot.new?
           build(relation, parent_ar_object, relation_snapshot)
         else
-          @ar_map.ar_object(relation_snapshot.object)
+          @ar_map[relation_snapshot.object]
         end
 
         update(relation.mapping, relation_snapshot, ar_object) if ar_object

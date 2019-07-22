@@ -20,7 +20,7 @@ module EntityMapper
         read_properties(mapping.properties, object, ar_model)
         read_relations(mapping.relations, object, ar_model)
 
-        @ar_map.add_entity(object, ar_model)
+        @ar_map[object] = ar_model
 
         object
       end

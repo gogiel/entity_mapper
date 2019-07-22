@@ -34,7 +34,7 @@ RSpec.describe EntityMapper::ActiveRecord::Read do
   end
 
   it "returns valid AR map" do
-    expect(ar_map.ar_object(mapped_entity)).to eq order
-    expect(ar_map.ar_object(mapped_entity.items.first)).to eq order_item
+    expect(ar_map[mapped_entity]).to eq order
+    expect(ar_map[mapped_entity.items.first]).to eq order_item
   end
 end

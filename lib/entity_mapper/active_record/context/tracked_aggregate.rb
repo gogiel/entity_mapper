@@ -13,13 +13,13 @@ module EntityMapper
         end
 
         def save_changes
-          ActiveRecord::Update.new(@ar_map).update(@mapping, snapshot_diff, @active_record_object)
+          Update.new(@ar_map).update(@mapping, snapshot_diff, @active_record_object)
         end
 
         private
 
         def snapshot_diff
-          EntityMapper::SnapshotDiff::Calculate.new.call(@initial_snapshot, take_snapshot)
+          SnapshotDiff::Calculate.new.call(@initial_snapshot, take_snapshot)
         end
 
         def take_snapshot

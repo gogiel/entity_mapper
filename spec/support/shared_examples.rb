@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ParameterLists
 RSpec.shared_examples "relation" do |virtual: false, collection: false, name:, persistence_name:, mapping:, options:|
   if virtual
     it "is virtual" do
@@ -37,3 +38,4 @@ RSpec.shared_examples "relation" do |virtual: false, collection: false, name:, p
     expect(subject.options).to eq options
   end
 end
+# rubocop:enable Metrics/ParameterLists

@@ -26,6 +26,16 @@ jobs:
       - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
       - run: bundle exec rake rubocop
 
+  sorbet:
+    docker:
+      - image: circleci/ruby:2.6.3
+    steps:
+      - checkout
+      - restore_cache:
+          key: bundle-{{ checksum "Gemfile" }}
+      - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+      - run: bundle exec srb tc --ignore vendor/
+
   mutant:
     docker:
       - image: circleci/ruby:2.6.3
@@ -43,6 +53,7 @@ workflows:
     jobs:
       - tests
       - rubocop
+      - sorbet
       - mutant:
           filters:
             branches:

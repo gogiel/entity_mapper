@@ -1,6 +1,5 @@
+# typed: true
 # frozen_string_literal: true
-
-# TMP in propgress
 
 module EntityMapper
   module ActiveRecord

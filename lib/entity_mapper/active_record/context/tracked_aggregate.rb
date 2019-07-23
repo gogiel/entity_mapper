@@ -19,7 +19,7 @@ module EntityMapper
         private
 
         def snapshot_diff
-          SnapshotDiff::Calculate.new.call(@initial_snapshot, take_snapshot)
+          SnapshotDiff::Calculate.call(@initial_snapshot, take_snapshot)
         end
 
         def take_snapshot

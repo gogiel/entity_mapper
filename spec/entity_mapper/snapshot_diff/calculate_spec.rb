@@ -33,10 +33,10 @@ RSpec.describe EntityMapper::SnapshotDiff::Calculate do
 
   let!(:snapshot1) { take_snapshot }
 
-  subject(:diff) { described_class.new.call(snapshot1, take_snapshot) }
+  subject(:diff) { described_class.call(snapshot1, take_snapshot) }
 
   context "current snapshot is nil" do
-    subject(:diff) { described_class.new.call(snapshot1, nil) }
+    subject(:diff) { described_class.call(snapshot1, nil) }
 
     it "is marked as removed" do
       expect(diff).to be_removed
@@ -82,7 +82,7 @@ RSpec.describe EntityMapper::SnapshotDiff::Calculate do
   end
 
   context "previous snapshot is nil" do
-    subject(:diff) { described_class.new.call(nil, snapshot1) }
+    subject(:diff) { described_class.call(nil, snapshot1) }
 
     it "is marked as new" do
       expect(diff).to be_new

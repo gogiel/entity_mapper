@@ -34,7 +34,7 @@ jobs:
       - restore_cache:
           key: bundle-{{ checksum "Gemfile" }}
       - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
-      - run: bundle exec srb tc
+      - run: bundle exec srb tc --ignore vendor/
 
   mutant:
     docker:

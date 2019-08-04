@@ -16,6 +16,14 @@ module EntityMapper
 
       attr_writer :remove_strategy
 
+      def allocate_model(ar_model)
+        if model_class.is_a? Proc
+          model_class.call(ar_model).allocate
+        else
+          model_class.allocate
+        end
+      end
+
       def add_relation(relation)
         relations << relation
       end

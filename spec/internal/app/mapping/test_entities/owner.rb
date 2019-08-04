@@ -8,5 +8,8 @@ module TestEntities
     def initialize(first_name)
       @first_name = first_name
     end
+
+    class Admin
+    end
   end
 end

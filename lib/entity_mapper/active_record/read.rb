@@ -16,7 +16,7 @@ module EntityMapper
       private
 
       def read(mapping, ar_model)
-        object = mapping.model_class.allocate
+        object = mapping.allocate_model(ar_model)
 
         read_properties(mapping.properties, object, ar_model)
         read_relations(mapping.relations, object, ar_model)

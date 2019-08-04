@@ -31,7 +31,7 @@ TestMapping = EntityMapper.map do |m|
 
     item_model.has_one("owner", persistence_name: "owner") do |owner|
       owner.remove_strategy :ignore
-      owner.model TestEntities::Owner
+      owner.model ->(owner_ar_model) { owner_ar_model.admin? ? TestEntities::Owner::Admin : TestEntities::Owner }
       owner.property :first_name, :name
     end
 

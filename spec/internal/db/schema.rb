@@ -40,6 +40,7 @@ ActiveRecord::Schema.define do
   create_table "order_item_owners", force: :cascade do |t|
     t.integer "order_item_id"
     t.string "name"
+    t.boolean "admin"
   end
 
   create_table "order_tags", force: :cascade do |t|

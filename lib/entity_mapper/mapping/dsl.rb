@@ -10,8 +10,8 @@ module EntityMapper
 
       attr_reader :mapping
 
-      def model(klass)
-        mapping.model_class = klass
+      def model(klass = nil, &block)
+        mapping.model_class = klass || block
       end
 
       def remove_strategy(strategy)

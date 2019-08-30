@@ -11,8 +11,9 @@ module EntityMapper
 
       def call
         @transaction_class.transaction do
-          yield self
-          save_changes
+          yield(self).tap do
+            save_changes
+          end
         end
       end
 
@@ -26,9 +27,11 @@ module EntityMapper
       end
 
       def create(mapping, entity, active_record_class)
+        active_record_object = active_record_class.new
         @tracked_aggregates << TrackedAggregate.new(
-          entity, ArMap.new, active_record_class.new, mapping
+          entity, ArMap.new, active_record_object, mapping
         )
+        active_record_object
       end
 
       private

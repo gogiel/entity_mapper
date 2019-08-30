@@ -70,7 +70,7 @@ RSpec.describe EntityMapper::ActiveRecord::Context do
       described_class.new(transaction_class: transaction_class).call do |context|
         @result = context.read(mapping1, active_record_object1)
         context.read(mapping2, active_record_object2)
-        context.create(create_mapping, create_entity, create_active_record_class)
+        @new_record = context.create(create_mapping, create_entity, create_active_record_class)
       end
     end
 
@@ -84,6 +84,11 @@ RSpec.describe EntityMapper::ActiveRecord::Context do
     it "calls transaction on custom transaction_class" do
       call
       expect(transaction_class).to have_received(:transaction)
+    end
+
+    it "returns new record from #create" do
+      call
+      expect(@new_record).to eq new_ar_object
     end
   end
 

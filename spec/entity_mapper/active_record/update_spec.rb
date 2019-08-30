@@ -8,6 +8,13 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
     EntityMapper::Transaction.call(&block)
   end
 
+  it "returns last call from transaction" do
+    result = transaction do
+      5
+    end
+    expect(result).to eq 5
+  end
+
   it "passes options to the context" do
     context = double :context_class, new: EntityMapper::ActiveRecord::Context.new
 
@@ -166,15 +173,15 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
       let(:create_order) do
         transaction do |context|
           order_entity = TestEntities::Order.new "Test name"
-          context.create(TestMapping, order_entity, Order)
+          @order = context.create(TestMapping, order_entity, Order)
         end
       end
 
       it "saves order" do
         expect { create_order }.to change(Order, :count).by(1)
-        order = Order.last
-        expect(order).to be_persisted
-        expect(order.name).to eq "Test name"
+        expect(@order).to eq Order.last
+        expect(@order).to be_persisted
+        expect(@order.name).to eq "Test name"
       end
     end
   end

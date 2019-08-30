@@ -1,7 +1,7 @@
 # typed: false
 # frozen_string_literal: true
 
-RSpec.describe EntityMapper::ActiveRecord::Context::TrackedAggregate do
+RSpec.describe EntityMapper::ActiveRecord::TrackedAggregate do
   let(:ar_map) { instance_double EntityMapper::ActiveRecord::ArMap }
   let(:active_record_object) { double }
   let(:mapping) { instance_double EntityMapper::Mapping::Model }

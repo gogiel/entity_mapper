@@ -1,7 +1,7 @@
 # typed: false
 # frozen_string_literal: true
 
-RSpec.describe EntityMapper::Transaction::ContextDSL do
+RSpec.describe EntityMapper::ContextDSL do
   let(:context) { spy }
 
   subject { described_class.new(context) }

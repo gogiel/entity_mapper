@@ -12,14 +12,14 @@ RSpec.describe EntityMapper::ActiveRecord::Context do
   let(:mapped_entity2) { double }
   let(:ar_map2) { instance_double EntityMapper::ActiveRecord::ArMap }
 
-  let(:tracked_aggregate1) { instance_double EntityMapper::ActiveRecord::Context::TrackedAggregate, save_changes: nil }
-  let(:tracked_aggregate2) { instance_double EntityMapper::ActiveRecord::Context::TrackedAggregate, save_changes: nil }
+  let(:tracked_aggregate1) { instance_double EntityMapper::ActiveRecord::TrackedAggregate, save_changes: nil }
+  let(:tracked_aggregate2) { instance_double EntityMapper::ActiveRecord::TrackedAggregate, save_changes: nil }
 
   let(:create_mapping) { EntityMapper::Mapping::Model }
   let(:create_entity) { double }
   let(:new_ar_object) { double }
   let(:create_active_record_class) { instance_double Class, new: new_ar_object }
-  let(:new_aggreagate) { instance_double EntityMapper::ActiveRecord::Context::TrackedAggregate, save_changes: nil }
+  let(:new_aggreagate) { instance_double EntityMapper::ActiveRecord::TrackedAggregate, save_changes: nil }
 
   before do
     allow(EntityMapper::ActiveRecord::Read).to receive(:call).with(mapping1, active_record_object1).
@@ -27,13 +27,13 @@ RSpec.describe EntityMapper::ActiveRecord::Context do
     allow(EntityMapper::ActiveRecord::Read).to receive(:call).with(mapping2, active_record_object2).
       and_return([mapped_entity2, ar_map2])
 
-    allow(EntityMapper::ActiveRecord::Context::TrackedAggregate).to receive(:new).
+    allow(EntityMapper::ActiveRecord::TrackedAggregate).to receive(:new).
       with(mapped_entity1, ar_map1, active_record_object1, mapping1).
       and_return(tracked_aggregate1)
-    allow(EntityMapper::ActiveRecord::Context::TrackedAggregate).to receive(:new).
+    allow(EntityMapper::ActiveRecord::TrackedAggregate).to receive(:new).
       with(mapped_entity2, ar_map2, active_record_object2, mapping2).
       and_return(tracked_aggregate2)
-    allow(EntityMapper::ActiveRecord::Context::TrackedAggregate).to receive(:new).
+    allow(EntityMapper::ActiveRecord::TrackedAggregate).to receive(:new).
       with(create_entity, kind_of(EntityMapper::ActiveRecord::ArMap), new_ar_object, create_mapping).
       and_return(new_aggreagate)
   end

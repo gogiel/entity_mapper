@@ -12,8 +12,6 @@ end
 
 require "rspec/rails"
 
-Zeitwerk::Loader.eager_load_all
-
 RSpec.configure do |config|
   # Disable RSpec exposing methods globally on `Module` and `main`
   config.disable_monkey_patching!

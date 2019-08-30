@@ -6,7 +6,7 @@ RSpec.describe EntityMapper::ActiveRecord::Read do
 
   let(:order_item) do
     ::OrderItem.new(name: "order-item", quantity: 3,  price_value: 3, price_currency: "USD",
-                    owner: ::OrderItemOwner.new(name: "John"))
+                    owner: ::OrderItemOwner.new(name: "John"), state: "completed")
   end
 
   let(:order_item2) do
@@ -37,6 +37,7 @@ RSpec.describe EntityMapper::ActiveRecord::Read do
     expect(item.price.value).to eq 3
     expect(item.price.currency).to eq TestEntities::Currency.new("USD")
     expect(item.owner.first_name).to eq "John"
+    expect(item.ready).to eq true
   end
 
   it "creates model based on model callback" do

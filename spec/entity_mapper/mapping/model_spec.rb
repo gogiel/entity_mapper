@@ -29,6 +29,36 @@ RSpec.describe EntityMapper::Mapping::Model do
     end
   end
 
+  describe "#allocate_model" do
+    let(:ar_model) { double }
+
+    context "when model_class is a Class" do
+      let(:test_class) { Class.new }
+      before { subject.model_class = test_class }
+
+      it "returns allocated object" do
+        expect(subject.allocate_model(nil)).to be_kind_of(test_class)
+      end
+    end
+
+    context "when model_class is a Proc" do
+      let(:test_class) { Class.new }
+      let(:test_spy) { spy }
+      let(:ar_model) { double }
+      before do
+        subject.model_class = lambda { |ar_model|
+          test_spy.call(ar_model)
+          test_class
+        }
+      end
+
+      it "returns allocated object using class from Proc" do
+        expect(subject.allocate_model(ar_model)).to be_kind_of(test_class)
+        expect(test_spy).to have_received(:call).with(ar_model)
+      end
+    end
+  end
+
   it "manages relations" do
     relation1 = instance_double EntityMapper::Mapping::Relation, name: "test1"
     relation2 = instance_double EntityMapper::Mapping::Relation, name: :test2

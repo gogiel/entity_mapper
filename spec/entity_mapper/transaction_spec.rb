@@ -9,7 +9,7 @@ RSpec.describe EntityMapper::Transaction do
 
       let(:call_dsl) do
         described_class.call(context_class: context_class, a: 1, b: 2) do |context|
-          expect(context).to be_kind_of(EntityMapper::Transaction::ContextDSL)
+          expect(context).to be_kind_of(EntityMapper::ContextDSL)
           context.read(:fake_mapping, :fake_object)
         end
       end
@@ -34,7 +34,7 @@ RSpec.describe EntityMapper::Transaction do
 
       let(:call_dsl) do
         described_class.call(a: 1, b: 2) do |context|
-          expect(context).to be_kind_of(EntityMapper::Transaction::ContextDSL)
+          expect(context).to be_kind_of(EntityMapper::ContextDSL)
           context.read(:fake_mapping, :fake_object)
         end
       end

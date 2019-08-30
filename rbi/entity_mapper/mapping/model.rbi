@@ -3,11 +3,14 @@
 module EntityMapper
   module Mapping
     class Model
-      sig { returns(Class) }
+      sig { returns(T.any(Class, T.proc.params(arg0: ::ActiveRecord::Base).returns(Class))) }
       def model_class; end
 
-      sig { params(model_class: Class).void }
+      sig { params(model_class: T.any(Class, T.proc.params(arg0: ::ActiveRecord::Base).returns(Class))).void }
       def model_class=(model_class); end
+
+      sig { params(ar_model: ::ActiveRecord::Base).returns(T.untyped) }
+      def allocate_model(ar_model); end
 
       sig { returns(Symbol) }
       def remove_strategy; end

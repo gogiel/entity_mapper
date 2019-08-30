@@ -27,6 +27,17 @@ RSpec.describe EntityMapper::AccessModes::Factory do
     end
   end
 
+  describe "null mode" do
+    let(:access_mode) { :null }
+
+    it "returns corresponding instance" do
+      instance = instance_double EntityMapper::AccessModes::Null
+      allow(EntityMapper::AccessModes::Null).to receive(:new) { instance }
+
+      expect(subject).to eq instance
+    end
+  end
+
   describe "unknown symbol mode" do
     let(:access_mode) { :unknown }
 

@@ -88,6 +88,21 @@ RSpec.describe EntityMapper::Mapping::Property do
         expect(accessor2).not_to have_received(:read_from)
       end
     end
+
+    context "custom read accessor with call method" do
+      let(:options) { { read_access: :test } }
+
+      it "writes value using custom accessor" do
+        call_accessor = instance_double Proc, call: nil
+        expect(EntityMapper::AccessModes::Factory).
+          to receive(:call).with(:test, "param-name").and_return(call_accessor)
+
+        read_value
+
+        expect(call_accessor).to have_received(:call).with(object)
+        expect(accessor).not_to have_received(:read_from)
+      end
+    end
   end
 
   describe "#write_to" do
@@ -123,6 +138,21 @@ RSpec.describe EntityMapper::Mapping::Property do
 
         expect(EntityMapper::AccessModes::Factory).
           to have_received(:call).with(:test, "param-name").twice
+      end
+    end
+
+    context "custom write accessor with call method" do
+      let(:options) { { write_access: :test } }
+
+      it "writes value using custom accessor" do
+        call_accessor = instance_double Proc, call: nil
+        expect(EntityMapper::AccessModes::Factory).
+          to receive(:call).with(:test, "param-name").and_return(call_accessor)
+
+        write_value
+
+        expect(call_accessor).to have_received(:call).with(object, value)
+        expect(accessor).not_to have_received(:write_to)
       end
     end
 

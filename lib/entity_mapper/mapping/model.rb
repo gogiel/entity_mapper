@@ -1,4 +1,4 @@
-# typed: true
+# typed: false - https://github.com/sorbet/sorbet/issues/48
 # frozen_string_literal: true
 
 require "set"
@@ -17,10 +17,11 @@ module EntityMapper
       attr_writer :remove_strategy
 
       def allocate_model(ar_model)
-        if model_class.is_a? Proc
-          model_class.call(ar_model).allocate
+        class_to_allocate = model_class # Sorbet
+        if class_to_allocate.instance_of? Class
+          class_to_allocate.allocate
         else
-          model_class.allocate
+          class_to_allocate.call(ar_model).allocate
         end
       end
 

@@ -10,7 +10,7 @@ module EntityMapper
       sig { returns(Model) }
       def mapping; end
 
-      sig { params(klass: Class).void }
+      sig { params(klass: T.nilable(T.any(Class, Proc))).void }
       def model(klass)
       end
 

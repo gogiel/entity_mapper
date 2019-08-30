@@ -7,6 +7,20 @@ require_relative "test_entities/order_item"
 require_relative "test_entities/price"
 require_relative "test_entities/tag"
 
+class TestAccessMode
+  def read_from(object)
+    if object.ready
+      "completed"
+    else
+      "not_completed"
+    end
+  end
+
+  def write_to(object, value)
+    object.instance_variable_set("@ready", value == "completed")
+  end
+end
+
 TestMapping = EntityMapper.map do |m|
   m.model TestEntities::Order
 
@@ -23,6 +37,7 @@ TestMapping = EntityMapper.map do |m|
     item_model.model TestEntities::OrderItem
     item_model.property(:quantity)
     item_model.property(:name)
+    item_model.property(:ready, :state, access: TestAccessMode.new)
 
     item_model.has_many("comments", persistence_name: "comments") do |item_comment|
       item_comment.model TestEntities::OrderItemComment

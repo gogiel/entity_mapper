@@ -10,8 +10,10 @@ module EntityMapper
           InstanceVariable.new(name)
         when :method
           Method.new(name)
-        else
+        when Symbol
           raise "Access mode #{access_mode} not supported."
+        else
+          access_mode # custom
         end
       end
     end

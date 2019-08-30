@@ -27,11 +27,19 @@ RSpec.describe EntityMapper::AccessModes::Factory do
     end
   end
 
-  describe "unknown mode" do
+  describe "unknown symbol mode" do
     let(:access_mode) { :unknown }
 
     it "raises exception" do
       expect { subject }.to raise_exception("Access mode unknown not supported.")
+    end
+  end
+
+  describe "custom mode" do
+    let(:access_mode) { double }
+
+    it "returns mode object with no changes" do
+      expect(subject).to eq access_mode
     end
   end
 end

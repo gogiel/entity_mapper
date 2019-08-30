@@ -107,7 +107,8 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
           "name" => "Milk",
           "price_value" => 3,
           "price_currency" => "PLN",
-          "quantity" => 1
+          "quantity" => 1,
+          "state" => "not_completed"
         )
       end
     end
@@ -155,7 +156,7 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
         it "saves nested item" do
           expect(order.order_items.count).to eq 1
           expect(order.order_items.first).to have_attributes(
-            name: "Milk", quantity: 1, price_value: 3, price_currency: "PLN"
+            name: "Milk", quantity: 1, price_value: 3, price_currency: "PLN", state: "not_completed"
           )
         end
       end

@@ -14,6 +14,7 @@ ActiveRecord::Schema.define do
     t.string "price_currency"
     t.integer "quantity"
     t.integer "order_id"
+    t.string "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_order_items_on_order_id"

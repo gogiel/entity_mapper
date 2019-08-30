@@ -4,7 +4,7 @@
 module EntityMapper
   module AccessModes
     class Factory
-      def self.call(access_mode, name)
+      def self.call(access_mode, name) # rubocop:disable Metrics/MethodLength
         case access_mode
         when :instance_variable
           InstanceVariable.new(name)

@@ -7,8 +7,8 @@ module EntityMapper
       @context = context
     end
 
-    def read(mapping, persisted_object)
-      @context.read(mapping, persisted_object)
+    def read(mapping, persisted_object, options = {})
+      @context.read(mapping, persisted_object, options)
     end
 
     def create(mapping, entity, persistence_reference)

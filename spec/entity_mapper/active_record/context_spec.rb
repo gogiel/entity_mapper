@@ -22,9 +22,9 @@ RSpec.describe EntityMapper::ActiveRecord::Context do
   let(:new_aggreagate) { instance_double EntityMapper::ActiveRecord::TrackedAggregate, save_changes: nil }
 
   before do
-    allow(EntityMapper::ActiveRecord::Read).to receive(:call).with(mapping1, active_record_object1).
+    allow(EntityMapper::ActiveRecord::Read).to receive(:call).with(mapping1, active_record_object1, {}).
       and_return([mapped_entity1, ar_map1])
-    allow(EntityMapper::ActiveRecord::Read).to receive(:call).with(mapping2, active_record_object2).
+    allow(EntityMapper::ActiveRecord::Read).to receive(:call).with(mapping2, active_record_object2, {}).
       and_return([mapped_entity2, ar_map2])
 
     allow(EntityMapper::ActiveRecord::TrackedAggregate).to receive(:new).
@@ -92,10 +92,17 @@ RSpec.describe EntityMapper::ActiveRecord::Context do
     end
   end
 
-  describe "reading" do
-    it "returns mapped_entity" do
-      call
-      expect(@result).to eq mapped_entity1
+  it "returns read entity" do
+    call
+    expect(@result).to eq mapped_entity1
+  end
+
+  it "passes options to read" do
+    expect(EntityMapper::ActiveRecord::Read).to receive(:call).with(mapping1, active_record_object1, boom: false).
+      and_return([mapped_entity1, ar_map1])
+
+    described_class.new.call do |context|
+      context.read(mapping1, active_record_object1, boom: false)
     end
   end
 end

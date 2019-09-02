@@ -26,3 +26,4 @@ RSpec.configure do |config|
 end
 
 require_relative "support/shared_examples"
+require_relative "support/active_record/queries_count"

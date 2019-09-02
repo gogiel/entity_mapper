@@ -4,12 +4,13 @@
 module EntityMapper
   module ActiveRecord
     class Read
-      def self.call(mapping, root)
-        new.call(mapping, root)
+      def self.call(mapping, root, preload: true)
+        new.call(mapping, root, preload: preload)
       end
 
-      def call(mapping, root)
+      def call(mapping, root, preload:)
         @ar_map = ArMap.new
+        preload_relations(mapping, root) if preload
         [read(mapping, root), @ar_map]
       end
 
@@ -53,6 +54,11 @@ module EntityMapper
           ar_object = ar_model.public_send(relation.persistence_name)
           read(relation.mapping, ar_object) if ar_object
         end
+      end
+
+      def preload_relations(mapping, root)
+        relations_to_preload = RelationsPreload.call(mapping)
+        ::ActiveRecord::Associations::Preloader.new.preload(root, relations_to_preload)
       end
     end
   end

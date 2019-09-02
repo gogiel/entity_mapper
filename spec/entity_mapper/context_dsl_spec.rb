@@ -9,7 +9,12 @@ RSpec.describe EntityMapper::ContextDSL do
   describe "#read" do
     it "delegates to context" do
       subject.read("mapping", "persisted_object")
-      expect(context).to have_received(:read).with("mapping", "persisted_object")
+      expect(context).to have_received(:read).with("mapping", "persisted_object", {})
+    end
+
+    it "delegates options to context" do
+      subject.read("mapping", "persisted_object", boom: false)
+      expect(context).to have_received(:read).with("mapping", "persisted_object", boom: false)
     end
   end
 

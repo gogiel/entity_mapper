@@ -13,4 +13,6 @@ source "https://oss:12DnPSH3dpv4dAypFxzoifr5vzs7vO9Y@gem.mutant.dev" do
   gem "mutant-license"
 end
 
+gem "parser", "2.6.3" # temporarily revert
+
 gem "pg"

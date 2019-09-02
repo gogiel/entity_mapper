@@ -7,8 +7,8 @@ module EntityMapper
       def call(&block)
       end
 
-      sig { params(mapping: Mapping::Model, active_record_object: ::ActiveRecord::Base).returns(T.untyped) }
-      def read(mapping, active_record_object)
+      sig { params(mapping: Mapping::Model, active_record_object: ::ActiveRecord::Base, options: T.untyped).returns(T.untyped) }
+      def read(mapping, active_record_object, options = {})
       end
 
       sig { params(mapping: Mapping::Model,entity: T.untyped, active_record_class: T.class_of(::ActiveRecord::Base)).void }

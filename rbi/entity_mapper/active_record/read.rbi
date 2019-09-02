@@ -3,12 +3,12 @@
 module EntityMapper
   module ActiveRecord
     class Read
-      sig { params(mapping: Mapping::Model, root: ::ActiveRecord::Base).returns([T.untyped, ArMap]) }
-      def self.call(mapping, root)
+      sig { params(mapping: Mapping::Model, root: ::ActiveRecord::Base, preload: T::Boolean).returns([T.untyped, ArMap]) }
+      def self.call(mapping, root, preload: true)
       end
 
-      sig { params(mapping: Mapping::Model, root: ::ActiveRecord::Base).returns([T.untyped, ArMap]) }
-      def call(mapping, root)
+      sig { params(mapping: Mapping::Model, root: ::ActiveRecord::Base, preload: T::Boolean).returns([T.untyped, ArMap]) }
+      def call(mapping, root, preload:)
       end
 
       private

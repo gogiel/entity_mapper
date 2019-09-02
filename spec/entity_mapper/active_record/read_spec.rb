@@ -5,12 +5,12 @@ RSpec.describe EntityMapper::ActiveRecord::Read do
   let(:map) { TestMapping }
 
   let(:order_item) do
-    ::OrderItem.new(name: "order-item", quantity: 3,  price_value: 3, price_currency: "USD",
+    ::OrderItem.new(name: "order-item", quantity: 3, price_value: 3, price_currency: "USD",
                     owner: ::OrderItemOwner.new(name: "John"), state: "completed")
   end
 
   let(:order_item2) do
-    ::OrderItem.new(name: "order-item", quantity: 3,  price_value: 3, price_currency: "USD",
+    ::OrderItem.new(name: "order-item", quantity: 3, price_value: 3, price_currency: "USD",
                     owner: ::OrderItemOwner.new(name: "Mike", admin: true))
   end
 
@@ -48,5 +48,44 @@ RSpec.describe EntityMapper::ActiveRecord::Read do
   it "returns valid AR map" do
     expect(ar_map[mapped_entity]).to eq order
     expect(ar_map[mapped_entity.items.first]).to eq order_item
+  end
+
+  describe "preloading" do
+    subject(:load_aggregate) { EntityMapper::ActiveRecord::Read.call(map, Order.find(order.id), preload: preloading_enabled) }
+
+    before do
+      order.order_items += 3.times.map do
+        ::OrderItem.new(name: "order-item", quantity: 3, price_value: 3, price_currency: "USD",
+                        owner: ::OrderItemOwner.new(name: "Mike", admin: true))
+      end
+      order.save!
+    end
+
+    context "when preloading is enabled" do
+      let(:preloading_enabled) { true }
+
+      it "preloads associations" do
+        queries_count = QueryCounter.call { load_aggregate }
+        expect(queries_count).to eq 6
+      end
+    end
+
+    context "when preloading is disabled" do
+      let(:preloading_enabled) { false }
+
+      it "doesn't preload associations" do
+        queries_count = QueryCounter.call { load_aggregate }
+        expect(queries_count).to eq 18
+      end
+    end
+
+    context "by default" do
+      subject(:load_aggregate) { EntityMapper::ActiveRecord::Read.call(map, Order.find(order.id)) }
+
+      it "preloads associations" do
+        queries_count = QueryCounter.call { load_aggregate }
+        expect(queries_count).to eq 6
+      end
+    end
   end
 end

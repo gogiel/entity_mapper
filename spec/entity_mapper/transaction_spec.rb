@@ -25,7 +25,7 @@ RSpec.describe EntityMapper::Transaction do
 
       it "yields context wrapped in a DSL" do
         call_dsl
-        expect(context_instance).to have_received(:read).with(:fake_mapping, :fake_object)
+        expect(context_instance).to have_received(:read).with(:fake_mapping, :fake_object, {})
       end
     end
 
@@ -51,7 +51,7 @@ RSpec.describe EntityMapper::Transaction do
 
       it "yields context wrapped in a DSL" do
         call_dsl
-        expect(context_instance).to have_received(:read).with(:fake_mapping, :fake_object)
+        expect(context_instance).to have_received(:read).with(:fake_mapping, :fake_object, {})
       end
     end
   end

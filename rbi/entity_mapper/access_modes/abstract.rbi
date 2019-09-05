@@ -1,4 +1,4 @@
-# typed: true
+# typed: strong
 module EntityMapper
   module AccessModes
     module Abstract

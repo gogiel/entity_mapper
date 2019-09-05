@@ -1,4 +1,4 @@
-# typed: true
+# typed: strong
 
 module EntityMapper
   module ActiveRecord
@@ -25,11 +25,11 @@ module EntityMapper
       def build(relation, parent_ar_object, relation_item_diff_snapshot)
       end
 
-      sig { params(relation: Mapping::Relation, parent_ar_object: ::ActiveRecord::Base, relation_snapshot: T::Array[SnapshotDiff::ObjectDiffSnapshot]).void }
+      sig { params(relation: Mapping::Relation, relation_snapshot: T::Array[SnapshotDiff::ObjectDiffSnapshot], parent_ar_object: ::ActiveRecord::Base).void }
       def update_collection_relation(relation, relation_snapshot, parent_ar_object)
       end
 
-      sig { params(relation: Mapping::Relation, parent_ar_object: ::ActiveRecord::Base, relation_snapshot: SnapshotDiff::ObjectDiffSnapshot).void }
+      sig { params(relation: Mapping::Relation, relation_snapshot: SnapshotDiff::ObjectDiffSnapshot, parent_ar_object: ::ActiveRecord::Base).void }
       def update_single_item(relation, relation_snapshot, parent_ar_object)
       end
     end

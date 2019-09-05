@@ -1,4 +1,4 @@
-# typed: true
+# typed: strong
 module EntityMapper
   module AccessModes
     class InstanceVariable

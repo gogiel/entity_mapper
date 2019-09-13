@@ -9,7 +9,7 @@ module EntityMapper
         @ar_map = ar_map
         @active_record_object = active_record_object
         @mapping = mapping
-        @initial_snapshot = take_snapshot
+        @initial_snapshot = take_snapshot if @active_record_object.persisted?
       end
 
       def save_changes

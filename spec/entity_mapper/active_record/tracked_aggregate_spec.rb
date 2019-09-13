@@ -3,7 +3,7 @@
 
 RSpec.describe EntityMapper::ActiveRecord::TrackedAggregate do
   let(:ar_map) { instance_double EntityMapper::ActiveRecord::ArMap }
-  let(:active_record_object) { double }
+  let(:active_record_object) { instance_double ActiveRecord::Base, persisted?: true }
   let(:mapping) { instance_double EntityMapper::Mapping::Model }
   let(:aggregate) { double }
   let(:snapshot_diff) { instance_double EntityMapper::SnapshotDiff::ObjectDiffSnapshot }
@@ -38,5 +38,22 @@ RSpec.describe EntityMapper::ActiveRecord::TrackedAggregate do
     expect(update_instance).to have_received(:update).with(
       mapping, snapshot_diff, active_record_object
     )
+  end
+
+  context "when record is not persisted" do
+    let(:active_record_object) { instance_double ActiveRecord::Base, persisted?: false }
+
+    it "calculates snapshot diff between nil snapshot and current snapshot" do
+      subject
+      subject.save_changes
+      expect(take_snapshot_instance).to have_received(:call).
+        with(aggregate, mapping).once
+
+      expect(EntityMapper::SnapshotDiff::Calculate).to have_received(:call).
+        with(nil, snapshot1)
+      expect(update_instance).to have_received(:update).with(
+        mapping, snapshot_diff, active_record_object
+      )
+    end
   end
 end

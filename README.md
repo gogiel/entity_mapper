@@ -186,7 +186,7 @@ There are two ways to create a new aggregate root:
 EntityMapper::Transaction.call do |context|
   mapped_entity = Entities::Order.new("New order")
   mapped_entity.items << TestEntities::OrderItem.new("Milk", 1, TestEntities::Price.new(3, TestEntities::Currency.new("USD")))
-  context.create(mapped_entity, Order)
+  context.create(Mapping, mapped_entity, Order)
 end
 ```
 
@@ -212,6 +212,47 @@ end
 ```
 
 This removes the `OrderItem` from Order.
+
+Removing whole aggregates and removal strategies are not supported yet.
+
+## Registry/Repository
+
+Usually there's only one mapping between Entity and Active Record class.
+
+In such cases EntityMapper read and create API can be simplified using mappings Registry.
+Registry is a map of ActiveRecord classes and corresponding mappings.
+
+```ruby
+Registry = EntityMapper::ActiveRecord::MappingsRegistry.new
+Registry.register Order, OrderMapping
+Registry.register User, UserMapping
+```
+
+Registry provides shortcuts for `read` and `create`.
+
+```ruby
+EntityMapper::Transaction.call do |context|
+  order = context.read(OrderMapping, order_record)
+  order.refund!
+end
+```
+
+is equivalent of:
+
+```ruby
+EntityMapper::Transaction.call do |context|
+  order = Registry.read(order_record, context: context)
+  order.refund!
+end
+```
+
+or without explicit context:
+
+```ruby
+Registry.read(order_record) do |order|
+  order.refund!
+end
+```
 
 ## Contributing
 

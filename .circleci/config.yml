@@ -7,13 +7,13 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: bundle-{{ checksum "Gemfile" }}
-      - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+          key: bundle-v2-{{ checksum "Gemfile" }}
+      - run: bundle check --path=/tmp/bundle || bundle install --path=/tmp/bundle --jobs=4 --retry=3
       # Store bundle cache
       - save_cache:
-          key: bundle-{{ checksum "Gemfile" }}
+          key: bundle-v2-{{ checksum "Gemfile" }}
           paths:
-            - vendor/bundle
+            - /tmp/bundle
       - run: bundle exec rake spec
 
   rubocop:
@@ -22,8 +22,8 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: bundle-{{ checksum "Gemfile" }}
-      - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+          key: bundle-v2-{{ checksum "Gemfile" }}
+      - run: bundle check --path=/tmp/bundle || bundle install --path=/tmp/bundle --jobs=4 --retry=3
       - run: bundle exec rake rubocop
 
   sorbet:
@@ -32,16 +32,16 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: bundle-{{ checksum "Gemfile" }}
+          key: bundle-v2-{{ checksum "Gemfile" }}
       - restore_cache:
           key: sorbet-{{ checksum "Gemfile" }}
-      - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+      - run: bundle check --path=/tmp/bundle || bundle install --path=/tmp/bundle --jobs=4 --retry=3
       - run: SRB_YES=1 bundle exec srb rbi update > /dev/null
       - save_cache:
           key: sorbet-{{ checksum "Gemfile" }}
           paths:
             - sorbet
-      - run: bundle exec srb tc --ignore vendor/
+      - run: bundle exec srb tc
 
   mutant:
     docker:
@@ -50,8 +50,8 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: bundle-{{ checksum "Gemfile" }}
-      - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+          key: bundle-v2-{{ checksum "Gemfile" }}
+      - run: bundle check --path=/tmp/bundle || bundle install --path=/tmp/bundle --jobs=4 --retry=3
       - run: bundle exec mutant -r entity_mapper -r ./spec/spec_helper -I lib  --use rspec --since origin/master -- 'EntityMapper*'
 
 workflows:

@@ -5,4 +5,4 @@ test:
   adapter: postgresql
   database: entity_mapper_test
   host: localhost
-  user: root
+  username: postgres

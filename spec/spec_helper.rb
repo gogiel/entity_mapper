@@ -5,10 +5,7 @@ require "bundler/setup"
 require "entity_mapper"
 require "combustion"
 
-Combustion.initialize! :active_record do
-  # Prevent deprecation message
-  config.active_record.sqlite3.represent_boolean_as_integer = true
-end
+Combustion.initialize! :active_record
 
 require "rspec/rails"
 

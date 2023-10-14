@@ -18,7 +18,7 @@ module EntityMapper
       end
 
       def read(mapping, active_record_object, options = {})
-        mapped_entity, ar_map = ActiveRecord::Read.call(mapping, active_record_object, options)
+        mapped_entity, ar_map = ActiveRecord::Read.call(mapping, active_record_object, **options)
         @tracked_aggregates << TrackedAggregate.new(
           mapped_entity, ar_map, active_record_object, mapping
         )

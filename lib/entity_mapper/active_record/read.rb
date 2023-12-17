@@ -58,7 +58,11 @@ module EntityMapper
 
       def preload_relations(mapping, root)
         relations_to_preload = RelationsPreload.call(mapping)
-        ::ActiveRecord::Associations::Preloader.new.preload(root, relations_to_preload)
+        if Rails.version >= "7"
+          ::ActiveRecord::Associations::Preloader.new(records: [root], associations: relations_to_preload).call
+        else
+          ::ActiveRecord::Associations::Preloader.new.preload(root, relations_to_preload)
+        end
       end
     end
   end

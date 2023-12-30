@@ -33,13 +33,11 @@ module EntityMapper
 
       private
 
-      def with_context(context)
+      def with_context(context, &block)
         if context
           yield context
         else
-          Transaction.call do |mapping_context|
-            yield mapping_context
-          end
+          Transaction.call(&block)
         end
       end
 

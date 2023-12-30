@@ -9,7 +9,6 @@ module TestEntities
       @first_name = first_name
     end
 
-    class Admin
-    end
+    class Admin; end # rubocop:disable Lint/EmptyClass
   end
 end

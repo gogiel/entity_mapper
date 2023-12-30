@@ -35,10 +35,10 @@ module EntityMapper
 
       def read_relations(relations, object, ar_model)
         relations.each do |relation|
-          result = if !relation.virtual?
-            read_ar_relations(ar_model, relation)
-          else
+          result = if relation.virtual?
             read(relation.mapping, ar_model)
+          else
+            read_ar_relations(ar_model, relation)
           end
 
           relation.write_to(object, result)
@@ -59,7 +59,8 @@ module EntityMapper
       def preload_relations(mapping, root)
         relations_to_preload = RelationsPreload.call(mapping)
         if Rails.version >= "7"
-          ::ActiveRecord::Associations::Preloader.new(records: [root], associations: relations_to_preload).call
+          ::ActiveRecord::Associations::Preloader.new(records: [root],
+                                                      associations: relations_to_preload).call
         else
           ::ActiveRecord::Associations::Preloader.new.preload(root, relations_to_preload)
         end

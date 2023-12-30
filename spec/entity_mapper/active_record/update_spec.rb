@@ -18,7 +18,7 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
   it "passes options to the context" do
     context = double :context_class, new: EntityMapper::ActiveRecord::Context.new
 
-    EntityMapper::Transaction.call(context_class: context, a: 1, b: 2) {}
+    EntityMapper::Transaction.call(context_class: context, a: 1, b: 2) { nil }
 
     expect(context).to have_received(:new).with(a: 1, b: 2)
   end
@@ -28,14 +28,14 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
     let(:owner) { OrderItemOwner.new name: "John" }
 
     let(:order_item) do
-      ::OrderItem.new(name: "order-item", quantity: 3, price_value: 3, price_currency: "USD").tap do |order_item|
+      OrderItem.new(name: "order-item", quantity: 3, price_value: 3, price_currency: "USD").tap do |order_item|
         order_item.comments = [comment]
         order_item.owner = owner
       end
     end
 
     let(:order) do
-      ::Order.create!(name: "test-name", paid: true).tap do |order|
+      Order.create!(name: "test-name", paid: true).tap do |order|
         order.order_items = [order_item]
       end.tap(&:save!)
     end
@@ -133,7 +133,7 @@ RSpec.describe EntityMapper::ActiveRecord::Update do
 
   context "new order" do
     context "from not persisted AR" do
-      let(:order) { ::Order.new }
+      let(:order) { Order.new }
 
       before do
         transaction do |context|

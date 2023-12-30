@@ -5,17 +5,17 @@ RSpec.describe EntityMapper::ActiveRecord::Read do
   let(:map) { TestMapping }
 
   let(:order_item) do
-    ::OrderItem.new(name: "order-item", quantity: 3, price_value: 3, price_currency: "USD",
-                    owner: ::OrderItemOwner.new(name: "John"), state: "completed")
+    OrderItem.new(name: "order-item", quantity: 3, price_value: 3, price_currency: "USD",
+                  owner: OrderItemOwner.new(name: "John"), state: "completed")
   end
 
   let(:order_item2) do
-    ::OrderItem.new(name: "order-item", quantity: 3, price_value: 3, price_currency: "USD",
-                    owner: ::OrderItemOwner.new(name: "Mike", admin: true))
+    OrderItem.new(name: "order-item", quantity: 3, price_value: 3, price_currency: "USD",
+                  owner: OrderItemOwner.new(name: "Mike", admin: true))
   end
 
   let(:order) do
-    ::Order.new(name: "test-name", paid: true).tap do |order|
+    Order.new(name: "test-name", paid: true).tap do |order|
       order.order_items = [order_item, order_item2]
     end
   end
@@ -55,8 +55,8 @@ RSpec.describe EntityMapper::ActiveRecord::Read do
 
     before do
       order.order_items += 3.times.map do
-        ::OrderItem.new(name: "order-item", quantity: 3, price_value: 3, price_currency: "USD",
-                        owner: ::OrderItemOwner.new(name: "Mike", admin: true))
+        OrderItem.new(name: "order-item", quantity: 3, price_value: 3, price_currency: "USD",
+                      owner: OrderItemOwner.new(name: "Mike", admin: true))
       end
       order.save!
     end

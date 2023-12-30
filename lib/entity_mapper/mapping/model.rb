@@ -1,20 +1,16 @@
 # typed: false - https://github.com/sorbet/sorbet/issues/48
 # frozen_string_literal: true
 
-require "set"
-
 module EntityMapper
   module Mapping
     class Model
-      attr_accessor :model_class
-      attr_reader :properties, :relations, :remove_strategy
+      attr_accessor :model_class, :remove_strategy
+      attr_reader :properties, :relations
 
       def initialize
         @properties = Set.new
         @relations = Set.new
       end
-
-      attr_writer :remove_strategy
 
       def allocate_model(ar_model)
         class_to_allocate = model_class # Sorbet

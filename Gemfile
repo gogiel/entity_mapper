@@ -14,3 +14,15 @@ source "https://oss:12DnPSH3dpv4dAypFxzoifr5vzs7vO9Y@gem.mutant.dev" do
 end
 
 gem "pg"
+
+gem "activerecord"
+gem "bundler"
+gem "combustion"
+gem "rake", "~> 10.0"
+gem "rspec", "~> 3.0"
+gem "rspec-rails"
+gem "rubocop", "1.59"
+gem "rubocop-rake"
+gem "rubocop-rspec"
+gem "sorbet"
+gem "sqlite3"

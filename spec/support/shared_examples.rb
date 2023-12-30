@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/ParameterLists
-RSpec.shared_examples "relation" do |virtual: false, collection: false, name:, persistence_name:, mapping:, options:|
+RSpec.shared_examples "relation" do |name:, persistence_name:, mapping:, options:, virtual: false, collection: false|
   if virtual
     it "is virtual" do
       expect(subject.virtual?).to eq true

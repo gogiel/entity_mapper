@@ -24,13 +24,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "zeitwerk", "~> 2.1"
 
-  spec.add_development_dependency "bundler"
-  spec.add_development_dependency "combustion"
-  spec.add_development_dependency "activerecord"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "rspec-rails"
-  spec.add_development_dependency "rubocop", "~> 0.72.0"
-  spec.add_development_dependency "sorbet"
-  spec.add_development_dependency "sqlite3"
+  spec.metadata["rubygems_mfa_required"] = "true"
+
+  spec.required_ruby_version = ">=3.0"
 end

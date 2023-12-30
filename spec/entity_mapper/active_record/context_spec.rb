@@ -50,7 +50,7 @@ RSpec.describe EntityMapper::ActiveRecord::Context do
     call
     expect(tracked_aggregate1).to have_received(:save_changes)
     expect(tracked_aggregate1).to have_received(:save_changes)
-    expect(new_aggreagate).to have_received(:save_changes)
+    expect(new_aggreagate).to have_received(:save_changes).twice # once for create, once for optional update
   end
 
   it "uses transaction" do
@@ -78,7 +78,7 @@ RSpec.describe EntityMapper::ActiveRecord::Context do
       call
       expect(tracked_aggregate1).to have_received(:save_changes)
       expect(tracked_aggregate2).to have_received(:save_changes)
-      expect(new_aggreagate).to have_received(:save_changes)
+      expect(new_aggreagate).to have_received(:save_changes).twice # once for create, once for optional update
     end
 
     it "calls transaction on custom transaction_class" do

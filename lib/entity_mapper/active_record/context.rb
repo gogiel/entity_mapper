@@ -28,9 +28,11 @@ module EntityMapper
 
       def create(mapping, entity, active_record_class)
         active_record_object = active_record_class.new
-        @tracked_aggregates << TrackedAggregate.new(
+        new_aggregate = TrackedAggregate.new(
           entity, ArMap.new, active_record_object, mapping
         )
+        new_aggregate.save_changes
+        @tracked_aggregates << new_aggregate
         active_record_object
       end
 
